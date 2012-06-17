@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 11
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinelliWindows8", "WinelliWIndows8\WinelliWindows8.csproj", "{2F27AE3B-3FF7-4DA3-BF58-A7858AFC96C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageBrokerLib", "..\storagebroker\StorageBrokerLib\StorageBrokerLib.csproj", "{7B342A2E-CD31-4FC0-B2CD-1A4AFE60EBCF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageBrokerLib", "..\storagebroker\storagebrokerrepo\StorageBrokerLib\StorageBrokerLib.csproj", "{7B342A2E-CD31-4FC0-B2CD-1A4AFE60EBCF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

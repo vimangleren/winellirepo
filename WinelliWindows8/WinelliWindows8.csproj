@@ -247,7 +247,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\storagebroker\StorageBrokerLib\StorageBrokerLib.csproj">
+    <ProjectReference Include="..\..\storagebroker\storagebrokerrepo\StorageBrokerLib\StorageBrokerLib.csproj">
       <Project>{7b342a2e-cd31-4fc0-b2cd-1a4afe60ebcf}</Project>
       <Name>StorageBrokerLib</Name>
     </ProjectReference>
