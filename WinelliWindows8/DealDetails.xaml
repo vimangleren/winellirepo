@@ -1,0 +1,121 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="PenguinDeals.DealDetails2"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PenguinDeals"
+    xmlns:common="using:PenguinDeals.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.BottomAppBar>
+        <AppBar x:Name="appbar" Padding="10,0,10,0">
+            <StackPanel Orientation="Horizontal"> 
+                <Button Click="GoHome" HorizontalAlignment="Left" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource HomeAppBarButtonStyle}"/>
+                <Button Click="Button_Click_1" AutomationProperties.Name="Trolley" Style="{StaticResource CartAppBarButtonStyle}"/>
+            </StackPanel>
+        </AppBar>
+    </Page.BottomAppBar>
+    
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/bg1.jpg" Opacity="0.5"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Style="{StaticResource PageHeaderTextStyle}" Grid.Column="1"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="0,10,0,-10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <GridView x:Name="imageGrid" SelectionMode="None" Grid.Column="1">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="250" Height="250">
+                            <Image Source="{Binding ImageUrl}" Stretch="Uniform" />
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+            
+            <Rectangle Grid.Column="3" HorizontalAlignment="Left" Height="250" Margin="0,266,0,0" Stroke="Black" VerticalAlignment="Top" Width="250">
+            	<Rectangle.Fill>
+            		<SolidColorBrush Color="#FFFF8518" Opacity="0.3"/>
+            	</Rectangle.Fill>
+            </Rectangle>
+            <TextBlock x:Name="tbBeginDeal" Grid.Column="3" HorizontalAlignment="Left" Height="31" Margin="41,470,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" FontSize="24" FontFamily="Segoe UI Semibold" Text="1 jan - 1 jan" Foreground="White"/>
+
+            <ScrollViewer Grid.Column="5" Width="406" Height="521" VerticalScrollBarVisibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top" Background="#00743434" Margin="4,0,0,0" d:LayoutOverrides="GridBox">
+                <RichTextBlock Grid.Column="5" Style="{StaticResource ItemRichTextStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="503" Width="381">
+                    <Paragraph>
+                        <Run FontSize="26.667" FontWeight="Light" x:Name="title" />
+                        <LineBreak />
+                        <LineBreak />
+                        <Run FontWeight="SemiBold" x:Name="description" />
+                    </Paragraph>
+                </RichTextBlock>
+            </ScrollViewer>
+            <Rectangle Grid.Column="3" HorizontalAlignment="Left" Height="250" Stroke="Black" VerticalAlignment="Top" Width="250" Margin="0,5,0,0">
+            	<Rectangle.Fill>
+            		<SolidColorBrush Color="#FFFF8518" Opacity="0.3"/>
+            	</Rectangle.Fill>
+            </Rectangle>
+            <Image Grid.Column="3" PointerEntered="imgPrice_PointerEntered_1" PointerExited="imgPrice_PointerExited_1" x:Name="imgPrice" HorizontalAlignment="Left" Height="231" Margin="7,0,0,0" VerticalAlignment="Top" Width="239" Source="Assets/Market.png" PointerPressed="Image_PointerPressed_1"/>
+            <TextBlock x:Name="tblPrice" Grid.Column="3" HorizontalAlignment="Center" Height="50" Margin="52,201,19,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" FontSize="29.333" FontFamily="Segoe UI Semibold" Foreground="White" d:LayoutOverrides="GridBox" Text="kr. 1.500,00 "/>
+            <Image Grid.Column="3" HorizontalAlignment="Left" Height="250" Margin="3,265,0,0" VerticalAlignment="Top" Width="237" Source="Assets/Calendar.png"/>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+
+            <!-- Visual states reflect the application's view state -->
+            <VisualStateGroup>
+                <VisualState x:Name="FullScreenLandscape"/>
+                <VisualState x:Name="Filled"/>
+
+                <!-- The back button respects the narrower 100-pixel margin convention for portrait -->
+                <VisualState x:Name="FullScreenPortrait">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+
+                <!-- The back button and title have different styles when snapped -->
+                <VisualState x:Name="Snapped">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle" Storyboard.TargetProperty="Style">
+                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+    </Grid>
+</common:LayoutAwarePage>

@@ -1,0 +1,99 @@
+﻿<common:LayoutAwarePage
+    x:Name="pageRoot"
+    x:Class="PenguinDeals.CategoryDeals"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PenguinDeals"
+    xmlns:common="using:PenguinDeals.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    NavigationCacheMode="Required">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Name="itemsViewSource"/>
+
+        <x:String x:Key="AppName">Winelli</x:String>
+
+		<LinearGradientBrush x:Key="mouseOver" Opacity="0.8">
+			<GradientStop Color="#FFFF8518" Offset="1"/>
+		</LinearGradientBrush>
+
+		<SolidColorBrush Color="#FF262627" x:Key="flagBackground" />
+	</UserControl.Resources>
+
+	<Page.BottomAppBar>
+		<AppBar x:Name="bottomNavigation" Padding="10,0,10,0">
+			<StackPanel Orientation="Horizontal">
+				<Button Click="GoHome" HorizontalAlignment="Left" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource HomeAppBarButtonStyle}"/>
+				<Button x:Name="btnTrolley" Click="btnTrolley_Click" AutomationProperties.Name="Trolley" Style="{StaticResource CartAppBarButtonStyle}"/>
+			</StackPanel>
+		</AppBar>
+	</Page.BottomAppBar>
+
+	<Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Assets/bg1.jpg" Opacity="0.5"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Back button and page title -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" Click="GoBack" IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" Style="{StaticResource BackButtonStyle}"/>
+            <TextBlock x:Name="pageTitle" Grid.Column="1" Style="{StaticResource PageHeaderTextStyle}"/>
+        </Grid>
+
+        <!-- Horizontal scrolling grid used in most view states -->
+        <ScrollViewer
+            x:Name="categoryDealsGridScrollViewer"
+            Grid.Row="1"
+            Style="{StaticResource HorizontalScrollViewerStyle}">
+
+            <GridView
+                x:Name="CategoryDealsGridView"
+                Margin="120,0,0,0"
+                SelectionMode="None"
+                IsItemClickEnabled="True"
+                ItemClick="CategoryDeals_ItemClick"
+                ItemsSource="{Binding Source={StaticResource itemsViewSource}}">
+				<GridView.ItemTemplate>
+					<DataTemplate>
+						<Grid Background="{StaticResource ListViewItemOverlayBackgroundBrush}" HorizontalAlignment="Left" Width="250" Height="275">
+							<Grid.RowDefinitions>
+								<RowDefinition Height="*"/>
+							</Grid.RowDefinitions>
+							<Border BorderThickness="0">
+								<Image Source="{Binding ImageUrls}" Width="250" Height="275" Stretch="Fill"/>
+							</Border>
+
+							<StackPanel x:Name="redwineDetails" Height="100"  VerticalAlignment="Bottom">
+								<Grid Background="{StaticResource ListViewItemOverlayBackgroundBrush}" PointerExited="dealDetails_PointerExited2" PointerEntered="dealDetails_PointerEntered">
+									<Grid.RowDefinitions>
+										<RowDefinition Height="70" />
+										<RowDefinition Height="30" />
+									</Grid.RowDefinitions>
+
+									<Grid>
+										<TextBlock Text="{Binding Title}" Height="70" Margin="15,10,15,0" FontSize="23.667" FontFamily="Segoe UI Light"/>
+									</Grid>
+									<Grid Grid.Row="1">
+										<Ellipse ToolTipService.ToolTip="{Binding Title}" Fill="{Binding WineColor}" HorizontalAlignment="Left" Height="20" Margin="218.5,2,0,0" Stroke="Black" StrokeThickness="0" VerticalAlignment="Top" Width="15"/>
+										<TextBlock Text="{Binding Price}" TextWrapping="NoWrap" Margin="15,0,50,10" FontSize="16.667" FontFamily="Segoe UI Light" />
+									</Grid>
+								</Grid>
+							</StackPanel>
+						</Grid>
+					</DataTemplate>
+				</GridView.ItemTemplate>
+			</GridView>
+        </ScrollViewer>
+    </Grid>
+</common:LayoutAwarePage>
